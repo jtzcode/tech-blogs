@@ -1,6 +1,12 @@
 # 一文看懂Htmx
 
-作为一个前端开发者，使用React这类前端框架也有一段时间了。在工作中使用某些工具时间久了，对相关新技术的就麻木了，不会主动思考诸如“为什么代码是这样写的？”，“这是最自然高效的开发方式吗？”这类的问题。偶然在JavaScript Weekly上看到了一篇对比`React`和`Htmx`的[文章](https://htmx.org/essays/a-real-world-react-to-htmx-port/)，生词出现了，什么是Htmx？它为什么要与React对比？它与JSX有什么关系？在本文中，我基于一些资料的学习试图回答上述问题。
+## 引言
+
+作为一个前端开发者，使用React这类前端框架也有一段时间了。在工作中使用某些工具时间久了，对相关新技术的就麻木了，不会主动思考诸如“为什么代码是这样写的？”，“这是最自然高效的开发方式吗？”这类的问题。
+
+偶然在JavaScript Weekly上看到了一篇对比`React`和`Htmx`的[文章](https://htmx.org/essays/a-real-world-react-to-htmx-port/)，生词出现了，什么是Htmx？它为什么要与React对比？它与JSX有什么关系？在本文中，我基于一些资料的学习试图回答上述问题。
+
+![htmx](../images/htmx.png)
 
 ## HATEOAS
 简单来说，Htmx提供了一种通过**HTML**（而不是**JavaScript**）访问各种浏览器特性的方式。
@@ -43,7 +49,7 @@
 ```
 这个响应结果可以直接嵌入当前HTML页面的某个位置，让应用程序进入下一个状态，即直接通过**超媒体**驱动，省去了大量JavaScript的操作。
 
-## 用法
+## 开始上手
 这里有个官方提供的例子，可以直观感受一下用法：
 ```html
 <button hx-post="/clicked"
@@ -63,9 +69,24 @@ Htmx更符合**声明式**的编程语法，有点**所见即所得**的意思�
 2. API的实现。由于返回结果变为HTML格式，那么API端可能有更多的渲染工作要做。这方面的技术积累自己是否胜任需要考虑。
 3. 重构成本。如果是已有的项目迁移到htmx，要根据项目规模、团队结构、业务逻辑评估迁移的ROI。
 
-你可能说Web API返回的数据是什么格式和结构有好坏之分吗（JSON vs Hypermedia）？其实对REST API的设计有一个[理查森成熟度模型]（https://en.wikipedia.org/wiki/Richardson_Maturity_Model），它将设计分层四个层级：
+## 延伸话题
 
-## 总结
+你可能说Web API返回的数据是什么格式和结构有好坏之分吗（JSON vs Hypermedia）？其实对REST API的设计有一个[理查森成熟度模型]（https://en.wikipedia.org/wiki/Richardson_Maturity_Model），这个模型的初衷是找到REST约束与其他类型Web服务的联系。它将设计分层四个层级：**The Swamp of POX，Resources，HTTP Verbs，Hypermedia Controls**，本文的HATEOAS即来源于最后一个层级。
+
+另外，采用Htmx的开发方法也符合[行为局部性原则](https://htmx.org/essays/locality-of-behaviour/)（Locality of Behavior，LoB），即开发者应该尽量让一段代码的功能看起来直观（不要让功能定义各处分散）。比如：
+```html
+<button hx-get="/get">Click Me</button>
+```
+和
+```javascript
+$("#btn").on("click", function(){
+    fetch(...)
+});
+<button id="btn">Click Me</button>
+```
+第一段Htmx代码直观地看出点击按钮的行为（发起`/get`请求），而后一段代码声明按钮控件在一个文件，定义单击事件行为的代码却在另一个文件，就不满足行为局部性约束。
+
+## Takeaways
 综上，我们可以概括使用Htmx开发的要点：
 1. 使用声明式的语法（而不是JavaScript脚本）来实现前端的交互。
 2. 使用超媒体（HTML元素）格式（而不是JSON）与服务器交换数据。
@@ -73,5 +94,9 @@ Htmx更符合**声明式**的编程语法，有点**所见即所得**的意思�
 现在就开启你的Htmx探索之旅吧。
 
 ## 参考阅读
+- https://htmx.org/essays/a-real-world-react-to-htmx-port/
+- https://htmx.org/essays/hateoas/
+- https://en.wikipedia.org/wiki/Hypermedia
 - https://htmx.org/essays/locality-of-behaviour/
 - https://htmx.org/essays/hypermedia-driven-applications/
+- https://en.wikipedia.org/wiki/Richardson_Maturity_Model
