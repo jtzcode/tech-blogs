@@ -64,4 +64,14 @@ Htmx更符合**声明式**的编程语法，有点**所见即所得**的意思�
 3. 重构成本。如果是已有的项目迁移到htmx，要根据项目规模、团队结构、业务逻辑评估迁移的ROI。
 
 你可能说Web API返回的数据是什么格式和结构有好坏之分吗（JSON vs Hypermedia）？其实对REST API的设计有一个[理查森成熟度模型]（https://en.wikipedia.org/wiki/Richardson_Maturity_Model），它将设计分层四个层级：
+
+## 总结
+综上，我们可以概括使用Htmx开发的要点：
+1. 使用声明式的语法（而不是JavaScript脚本）来实现前端的交互。
+2. 使用超媒体（HTML元素）格式（而不是JSON）与服务器交换数据。
+
+现在就开启你的Htmx探索之旅吧。
+
 ## 参考阅读
+- https://htmx.org/essays/locality-of-behaviour/
+- https://htmx.org/essays/hypermedia-driven-applications/
